@@ -31,6 +31,17 @@ export async function ensureAuthenticated(
       throw new AppError('User does not exists', 401);
     }
 
+    /**
+     * Aqui estamos a adicionar a propriedade user ao request do express
+     * Mas para que isto funcione é necessário sobrescrever as tipagens do express, adicionando no request esta propriedade
+     * Este processo foi feito em @types/express/index.d.ts
+     * Neste caso estamos a atribuir a propriedade id ao atributo user do request pertencente ao express
+     * Para que esta mesma propriedade seja acessível em outros arquivos através do request
+     */
+    request.user = {
+      id: user_id
+    }
+
     next();
   } catch (error) {
     throw new AppError('Invalid token!', 401);
