@@ -2,11 +2,13 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import swaggerUI from 'swagger-ui-express';
 
-import '../typeorm';
 import '@shared/container';
+import createConnection from '@shared/infra/typeorm';
 import { routes } from './routes';
 import swaggerFile from '../../../swagger.json';
 import { AppError } from '@shared/errors/AppErrors';
+
+createConnection();
 
 const app = express();
 
