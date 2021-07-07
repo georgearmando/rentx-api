@@ -9,6 +9,7 @@ class CarsRepository implements ICarsRepository {
   constructor() {
     this.repository = getRepository(Car);
   }
+
   async create({
     name,
     brand,
@@ -37,6 +38,14 @@ class CarsRepository implements ICarsRepository {
     return this.repository.findOne({
       license_plate
     });
+  }
+
+  async findAvailableCars(category_id?: string, brand?: string, name?: string): Promise<Car[]> {
+    let availableCars = this.repository.find({
+      where: { available: true }
+    });
+
+    return availableCars;
   }
 
 }
