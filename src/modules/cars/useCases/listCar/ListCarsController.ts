@@ -4,13 +4,14 @@ import { ListCarsUseCase } from "./ListCarsUseCase";
 
 class ListCarsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { brand, name, category_id } = request.query;
+    const { name, brand, category_id } = request.query;
 
     const listCarsUseCase = container.resolve(ListCarsUseCase);
 
     const cars = await listCarsUseCase.execute({
-      brand: brand as string,
+      //Forçamos os atributos a serem do tipo string pk elas podem vir da query com outros tipos
       name: name as string,
+      brand: brand as string,
       category_id: category_id as string,
     });
 
