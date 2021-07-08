@@ -35,17 +35,41 @@ class CarsRepository implements ICarsRepository {
   }
 
   async findByLicensePlate(license_plate: string): Promise<Car> {
-    return this.repository.findOne({
+    return await this.repository.findOne({
       license_plate
     });
   }
 
-  async findAvailableCars(category_id?: string, brand?: string, name?: string): Promise<Car[]> {
-    let availableCars = this.repository.find({
+  async findAvailableCars(name?: string, brand?: string, category_id?: string,): Promise<Car[]> {
+    const carsQuery = await this.repository
+      .createQueryBuilder("c")
+      .where("available = :available", { available: true });
+
+    if (brand) {
+      carsQuery.andWhere("brand = :brand", { brand });
+    }
+
+    if (name) {
+      carsQuery.andWhere("name = :name", { name });
+    }
+
+    if (category_id) {
+      carsQuery.andWhere("category_id = :category_id", { category_id });
+    }
+
+    const cars = await carsQuery.getMany();
+
+    return cars;
+
+    /*let availableCars = await this.repository.find({
       where: { available: true }
     });
 
-    return availableCars;
+    if (name) availableCars = availableCars.filter(car => car.name === name);
+    if (brand) availableCars = availableCars.filter(car => car.brand === brand);
+    if (category_id) availableCars = availableCars.filter(car => car.category_id === category_id);
+
+    return availableCars;*/
   }
 
 }
