@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Category } from './Category';
+import { Specification } from './Specification';
 
 @Entity('cars')
 class Car {
@@ -27,6 +28,17 @@ class Car {
 
   @Column()
   brand: string;
+
+  //Aqui estamos a criar uma relação de Muitos para Muitos
+  //Indicamos a tabela que vai juntar as duas que fazem parte do relacionamento
+  //Indicamos as colunas que vão se relacionar de um lado e do outro
+  @ManyToMany(() => Specification)
+  @JoinTable({
+    name: 'specifications_cars',
+    joinColumns: [{ name: 'car_id' }],
+    inverseJoinColumns: [{ name: 'specification_id' }]
+  })
+  specifications: Specification[];
 
   @ManyToOne(() => Category)
   @JoinColumn({ name: 'category_id' })
