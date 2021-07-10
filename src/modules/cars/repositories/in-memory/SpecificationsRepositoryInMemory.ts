@@ -22,7 +22,7 @@ class SpecificationsRepositoryInMemory implements ISpecificationsRepository {
     throw new Error("Method not implemented.");
   }
 
-  async findByIds(specifications_id: string[]): Promise<Specification[]> {
+  async findByIds(ids: string[]): Promise<Specification[]> {
     /*let allSpecifications: Specification[] = [];
 
     specifications_id.forEach(id => {
@@ -32,7 +32,7 @@ class SpecificationsRepositoryInMemory implements ISpecificationsRepository {
     });*/
 
     const allSpecifications = this.specifications.filter(specification =>
-      specifications_id.includes(specification.id)
+      ids.includes(specification.id)
     );
 
     return allSpecifications;
