@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { Car } from "@modules/cars/infra/typeorm/entities/Cars";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository"
 import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
@@ -11,8 +12,10 @@ interface IRequest {
 @injectable()
 class CreateCarSpecificationUseCase {
   constructor(
+    @inject('CarsRepository')
     private carsRepository: ICarsRepository,
 
+    @inject('SpecificationsRepository')
     private specificationsRepository: ISpecificationsRepository
   ) { }
 
@@ -26,6 +29,8 @@ class CreateCarSpecificationUseCase {
     const specifications = await this.specificationsRepository.findByIds(specifications_id);
 
     car.specifications = specifications;
+
+    await this.carsRepository.create(car);
 
     return car;
   }
