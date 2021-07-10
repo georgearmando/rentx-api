@@ -8,6 +8,7 @@ interface IRequest {
   specifications_id: string[];
 }
 
+@injectable()
 class CreateCarSpecificationUseCase {
   constructor(
     private carsRepository: ICarsRepository,
