@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppErrors";
 import { CreateRentalUseCase } from "./CreateRentalUseCase";
@@ -29,13 +30,13 @@ describe('Create Rental', () => {
       await createRentalUseCase.execute({
         user_id: "12345",
         car_id: "1111",
-        expected_return_date: new Date()
+        expected_return_date: dayAdd24Hours
       });
 
       await createRentalUseCase.execute({
         user_id: "12345",
         car_id: "121212",
-        expected_return_date: new Date()
+        expected_return_date: dayAdd24Hours
       })
     }).rejects.toBeInstanceOf(AppError);
   });
@@ -51,7 +52,17 @@ describe('Create Rental', () => {
       await createRentalUseCase.execute({
         user_id: "1234567",
         car_id: "1111",
-        expected_return_date: new Date()
+        expected_return_date: dayAdd24Hours
+      })
+    }).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("should not be able to create a new rental with invalid return time", () => {
+    expect(async () => {
+      await createRentalUseCase.execute({
+        user_id: "1234567",
+        car_id: "1111",
+        expected_return_date: dayjs().toDate()
       })
     }).rejects.toBeInstanceOf(AppError);
   });
