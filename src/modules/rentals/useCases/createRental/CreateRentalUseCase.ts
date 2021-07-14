@@ -50,8 +50,6 @@ class CreateRentalUseCase {
 
     const compare = dayjs(expectedReturnDateFormat).diff(dateNow, 'hours');
 
-    console.log(compare < minimumHour)
-
     if (compare < minimumHour) {
       throw new AppError('Invalid return time!');
     }
