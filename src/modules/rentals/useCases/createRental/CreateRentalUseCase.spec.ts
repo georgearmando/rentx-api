@@ -45,7 +45,7 @@ describe('Create Rental', () => {
       await createRentalUseCase.execute({
         user_id: "12345",
         car_id: "1111",
-        expected_return_date: new Date()
+        expected_return_date: dayAdd24Hours
       });
 
       await createRentalUseCase.execute({
