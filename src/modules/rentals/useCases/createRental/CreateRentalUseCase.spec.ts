@@ -17,7 +17,7 @@ describe('Create Rental', () => {
     const rental = await createRentalUseCase.execute({
       user_id: "12345",
       car_id: '121212',
-      expected_return_date: new Date()
+      expected_return_date: dayAdd24Hours
     });
 
     expect(rental).toHaveProperty("id");
