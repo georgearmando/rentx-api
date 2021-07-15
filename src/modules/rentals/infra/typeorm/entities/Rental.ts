@@ -11,37 +11,37 @@ import { v4 as uuid } from "uuid";
 
 import { Car } from "@modules/cars/infra/typeorm/entities/Cars";
 
-//@Entity("rentals")
+@Entity("rentals")
 class Rental {
-  //@PrimaryColumn()
+  @PrimaryColumn()
   id: string;
 
-  //@ManyToOne(() => Car)
-  //@JoinColumn({ name: "car_id" })
+  @ManyToOne(() => Car)
+  @JoinColumn({ name: "car_id" })
   car: Car;
 
-  //@Column()
+  @Column()
   car_id: string;
 
-  //@Column()
+  @Column()
   user_id: string;
 
-  // @Column()
+  @Column()
   start_date: Date;
 
-  //@Column()
+  @Column()
   end_date: Date;
 
-  //@Column()
+  @Column()
   expected_return_date: Date;
 
-  //@Column()
+  @Column()
   total: number;
 
-  //@CreateDateColumn()
+  @CreateDateColumn()
   created_at: Date;
 
-  //@UpdateDateColumn()
+  @UpdateDateColumn()
   updated_at: Date;
 
   constructor() {
