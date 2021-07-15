@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
@@ -45,14 +43,12 @@ class CreateRentalUseCase {
     }
 
     // O aluguer deve ter duração mínima de 24 horas
-    const expectedReturnDateFormat = dayjs(expected_return_date)
-      .utc()
-      .local()
-      .format();
+    const dateNow = this.dateProvider.dateNow();
 
-    const dateNow = dayjs().utc().local().format();
-
-    const compare = dayjs(expectedReturnDateFormat).diff(dateNow, 'hours');
+    const compare = this.dateProvider.compareInHour(
+      expected_return_date,
+      dateNow,
+    );
 
     if (compare < minimumHour) {
       throw new AppError('Invalid return time!');
