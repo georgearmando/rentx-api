@@ -33,6 +33,6 @@ carsRoutes.post(
   uploadCarImagesController.handle
 );
 
-carsRoutes.get('/', listCarsController.handle);
+carsRoutes.get('/available', listCarsController.handle);
 
 export { carsRoutes }
