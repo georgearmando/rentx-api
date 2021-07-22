@@ -10,7 +10,6 @@ let connection: Connection;
 
 describe('Create Category Controller', () => {
   beforeAll(async () => {
-    console.log('Passei Aqui');
     connection = await createConnection();
     await connection.runMigrations();
 
@@ -35,11 +34,13 @@ describe('Create Category Controller', () => {
       password: 'admin'
     });
 
-    console.log(responseToken.body);
+    const { token } = responseToken.body;
 
     const response = await request(app).post('/categories').send({
       name: 'Category Name',
       description: 'Category Description'
+    }).set({
+      Authorization: `Bearer ${token}`
     });
 
     expect(response.status).toBe(201);
