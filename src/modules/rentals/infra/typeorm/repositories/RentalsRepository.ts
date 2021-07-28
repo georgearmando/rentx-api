@@ -29,9 +29,6 @@ class RentalsRepository implements IRentalsRepository {
     });
 
     await this.repository.save(rental);
-      id,
-      end_date,
-      total
 
     return rental;
   }
@@ -46,6 +43,10 @@ class RentalsRepository implements IRentalsRepository {
     return await this.repository.findOne({
       user_id
     });
+  }
+
+  async findById(id: string): Promise<Rental> {
+    return await this.repository.findOne(id);
   }
 }
 
