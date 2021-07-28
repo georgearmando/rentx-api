@@ -41,7 +41,7 @@ class RentalsRepository implements IRentalsRepository {
 
   async findOpenRentalByUser(user_id: string): Promise<Rental> {
     return await this.repository.findOne({
-      user_id
+      where: { user_id, end_date: null }
     });
   }
 
