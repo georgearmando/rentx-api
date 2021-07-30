@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { verify } from 'jsonwebtoken';
 
 import { AppError } from '@shared/errors/AppErrors';
-import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository';
+import { JWTAuthProvider } from '@shared/container/providers/AuthProvider/implementations/JWTAuthProvider';
 
 interface IPayload {
   sub: string;
@@ -22,15 +21,9 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub: user_id } = verify(token, 'c3686ca82c5b4aad5312da8d237edd9f') as IPayload;
+    const authProvider = new JWTAuthProvider();
 
-    const usersRepository = new UsersRepository();
-
-    const user = usersRepository.findById(user_id);
-
-    if (!user) {
-      throw new AppError('User does not exists', 401);
-    }
+    const user_id = authProvider.verifyToken(token);
 
     /**
      * Aqui estamos a adicionar a propriedade user ao request do express
