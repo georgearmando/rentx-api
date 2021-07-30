@@ -1,9 +1,9 @@
 import { compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe"
 
 import { AppError } from "@shared/errors/AppErrors";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IAuthProvider } from "@shared/container/providers/AuthProvider/IAuthProvider";
 
 interface IRequest {
   email: string;
@@ -22,7 +22,10 @@ interface IResponse {
 class AuthenticateUserUseCase {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+
+    @inject('AuthProvider')
+    private authProvider: IAuthProvider
   ) { }
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -38,10 +41,7 @@ class AuthenticateUserUseCase {
       throw new AppError('Email or password incorrect!');
     }
 
-    const token = sign({}, 'c3686ca82c5b4aad5312da8d237edd9f', {
-      subject: user.id,
-      expiresIn: '1d'
-    });
+    const token = this.authProvider.generateToken(user.id);
 
     const tokenReturn: IResponse = {
       token,
