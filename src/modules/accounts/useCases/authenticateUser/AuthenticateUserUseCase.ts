@@ -6,6 +6,7 @@ import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepositor
 import { IAuthProvider } from "@shared/container/providers/AuthProvider/IAuthProvider";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import authConfig from '@config/auth';
 
 interface IRequest {
   email: string;
@@ -30,6 +31,9 @@ class AuthenticateUserUseCase {
     @inject('AuthProvider')
     private authProvider: IAuthProvider,
 
+    @inject('DateProvider')
+    private dateProvider: IDateProvider,
+
     @inject('UsersTokensRepository')
     private usersTokensRepository: IUsersTokensRepository,
   ) { }
@@ -51,7 +55,9 @@ class AuthenticateUserUseCase {
 
     const refresh_token = this.authProvider.generateRefreshToken(email, user.id);
 
-    const refresh_token_expires_date = this.authProvider.refreshTokenExpireDate();
+    const refresh_token_expires_date = this.dateProvider.addDays(
+      authConfig.jwt.expires_refresh_token_days
+    );
 
     await this.usersTokensRepository.create({
       user_id: user.id,

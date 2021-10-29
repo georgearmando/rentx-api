@@ -28,7 +28,7 @@ class UsersTokensRepository implements IUsersTokensRepository {
     return userToken;
   }
 
-  /*async findByUserIdAndRefreshToken(
+  async findByUserIdAndRefreshToken(
     user_id: string,
     refresh_token: string
   ): Promise<UserTokens> {
@@ -39,6 +39,7 @@ class UsersTokensRepository implements IUsersTokensRepository {
     return usersTokens;
   }
 
+
   async deleteById(id: string): Promise<void> {
     await this.repository.delete(id);
   }
@@ -47,7 +48,7 @@ class UsersTokensRepository implements IUsersTokensRepository {
     const userToken = await this.repository.findOne({ refresh_token });
 
     return userToken;
-  }*/
+  }
 }
 
 export { UsersTokensRepository };

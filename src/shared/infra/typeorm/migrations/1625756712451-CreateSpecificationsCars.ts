@@ -26,10 +26,28 @@ export class CreateSpecificationsCars1625756712451
             default: "now()",
           },
         ],
+        foreignKeys: [
+          {
+            name: 'FKSpecificationCar',
+            referencedTableName: "specifications",
+            referencedColumnNames: ["id"],
+            columnNames: ["specification_id"],
+            onDelete: "SET NULL",
+            onUpdate: "SET NULL",
+          },
+          {
+            name: "FKCarSpecification",
+            referencedTableName: "cars",
+            referencedColumnNames: ["id"],
+            columnNames: ["car_id"],
+            onDelete: "SET NULL",
+            onUpdate: "SET NULL",
+          },
+        ]
       })
     );
 
-    await queryRunner.createForeignKey(
+    /*await queryRunner.createForeignKey(
       "specifications_cars",
       new TableForeignKey({
         name: "FKSpecificationCar",
@@ -51,11 +69,11 @@ export class CreateSpecificationsCars1625756712451
         onDelete: "SET NULL",
         onUpdate: "SET NULL",
       })
-    );
+    );*/
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey(
+    /*await queryRunner.dropForeignKey(
       "specifications_cars",
       "FKCarSpecification"
     );
@@ -63,7 +81,7 @@ export class CreateSpecificationsCars1625756712451
     await queryRunner.dropForeignKey(
       "specifications_cars",
       "FKSpecificationCar"
-    );
+    );*/
 
     await queryRunner.dropTable("specifications_cars");
   }

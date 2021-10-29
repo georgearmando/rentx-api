@@ -8,12 +8,13 @@ interface IPayload {
   sub: string;
 }
 
+interface IPayloadRefreshToken {
+  email: string;
+  sub: string;
+}
+
 @injectable()
 class JWTAuthProvider implements IAuthProvider {
-  constructor(
-    @inject('DateProvider')
-    private dateProvider: IDateProvider
-  ) { }
   generateToken(user_id: string): string {
     const { expiresIn, secret_token } = authConfig.jwt;
 
@@ -36,20 +37,23 @@ class JWTAuthProvider implements IAuthProvider {
     return refreshToken
   }
 
-  refreshTokenExpireDate(): Date {
-    const { expires_refresh_token_days } = authConfig.jwt;
-
-    return this.dateProvider.addDays(
-      expires_refresh_token_days
-    );
-  }
-
   verifyToken(token: string): string {
     const { secret_token } = authConfig.jwt;
 
     const { sub: user_id } = verify(token, secret_token) as IPayload;
 
     return user_id
+  }
+
+  verifyRefreshToken(refresh_token: string): {} {
+    const { secret_refresh_token } = authConfig.jwt;
+
+    const { email, sub } = verify(refresh_token, secret_refresh_token) as IPayloadRefreshToken;
+
+    return {
+      email,
+      sub,
+    }
   }
 }
 
