@@ -23,7 +23,7 @@ export async function ensureAuthenticated(
   try {
     const authProvider = new JWTAuthProvider();
 
-    const user_id = authProvider.verifyToken(token);
+    const { user_id } = authProvider.verifyRefreshToken(token);
 
     /**
      * Aqui estamos a adicionar a propriedade user ao request do express
