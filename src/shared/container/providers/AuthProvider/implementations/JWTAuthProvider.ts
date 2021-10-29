@@ -45,14 +45,16 @@ class JWTAuthProvider implements IAuthProvider {
     return user_id
   }
 
-  verifyRefreshToken(refresh_token: string): {} {
+  verifyRefreshToken(refresh_token: string) {
     const { secret_refresh_token } = authConfig.jwt;
 
     const { email, sub } = verify(refresh_token, secret_refresh_token) as IPayloadRefreshToken;
 
+    const user_id = sub;
+
     return {
       email,
-      sub,
+      user_id
     }
   }
 }
