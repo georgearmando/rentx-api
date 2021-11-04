@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add nodemailer
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add handlebars
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Nilton Filho do Rei\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python38\Scripts;C:\Python38;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\ProgramData\chocolatey\bin;C:\WINDOWS\System32\OpenSSH;C:\Program Files\PuTTY;C:\Program Files\PostgreSQL\12\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Program Files\nodejs;C:\Users\Nilton Filho do Rei;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\ProgramData\chocolatey\lib\Elixir\bin;C:\ProgramData\chocolatey\lib\Elixir\bin;C:\ProgramData\chocolatey\lib\Elixir\bin;C:\Users\Nilton Filho do Rei\AppData\Local\Microsoft\WindowsApps;C:\Users\Nilton Filho do Rei\AppData\Local\Programs\Microsoft VS Code\bin;C:\tools\dart-sdk\bin;C:\Users\Nilton Filho do Rei\AppData\Roaming\Pub\Cache\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;C:\Program Files\mongo\bin;C:\Program Files\PostgreSQL\12\bin;C:\Users\Nilton Filho do Rei\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Users\Nilton Filho do Rei\AppData\Roaming\npm;C:\Users\Nilton Filho do Rei;C:\flutter\bin;C:\Users\Nilton Filho do Rei\AppData\Local\nvs;C:\Program Files\Multipass\bin
@@ -43,6 +43,7 @@ npm manifest:
       "express-async-errors": "^3.1.1",
       "jsonwebtoken": "^8.5.1",
       "multer": "^1.4.2",
+      "nodemailer": "^6.7.0",
       "pg": "^8.6.0",
       "reflect-metadata": "^0.1.13",
       "swagger-ui-express": "^4.1.6",
@@ -58,6 +59,7 @@ npm manifest:
       "@types/jest": "^26.0.23",
       "@types/jsonwebtoken": "^8.5.1",
       "@types/multer": "^1.4.5",
+      "@types/nodemailer": "^6.4.4",
       "@types/supertest": "^2.0.11",
       "@types/swagger-ui-express": "^4.1.2",
       "@types/uuid": "^8.3.0",
@@ -979,6 +981,13 @@ Lockfile:
     version "15.0.1"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.1.tgz#ef34dea0881028d11398be5bf4e856743e3dc35a"
     integrity sha512-TMkXt0Ck1y0KKsGr9gJtWGjttxlZnnvDtphxUOSd0bfaR6Q1jle+sPvrzNR1urqYTWMinoKvjKfXUGsumaO1PA==
+  
+  "@types/nodemailer@^6.4.4":
+    version "6.4.4"
+    resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.4.4.tgz#c265f7e7a51df587597b3a49a023acaf0c741f4b"
+    integrity sha512-Ksw4t7iliXeYGvIQcSIgWQ5BLuC/mljIEbjf615svhZL10PE9t+ei8O9gDaD3FPCasUJn9KTLwz2JFJyiiyuqw==
+    dependencies:
+      "@types/node" "*"
   
   "@types/normalize-package-data@^2.4.0":
     version "2.4.0"
@@ -4256,6 +4265,11 @@ Lockfile:
     version "1.1.73"
     resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.73.tgz#dd4e81ddd5277ff846b80b52bb40c49edf7a7b20"
     integrity sha512-uW7fodD6pyW2FZNZnp/Z3hvWKeEW1Y8R1+1CnErE8cXFXzl5blBOoVB41CvMer6P6Q0S5FXDwcHgFd1Wj0U9zg==
+  
+  nodemailer@^6.7.0:
+    version "6.7.0"
+    resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.0.tgz#86614722c4e0c33d1b5b02aecb90d6d629932b0d"
+    integrity sha512-AtiTVUFHLiiDnMQ43zi0YgkzHOEWUkhDgPlBXrsDzJiJvB29Alo4OKxHQ0ugF3gRqRQIneCLtZU3yiUo7pItZw==
   
   normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.5.0:
     version "2.5.0"
