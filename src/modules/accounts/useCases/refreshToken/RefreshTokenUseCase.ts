@@ -1,5 +1,4 @@
 import { sign, verify } from "jsonwebtoken";
-import authConfig from '@config/auth';
 import { inject, injectable } from "tsyringe";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { AppError } from "@shared/errors/AppErrors";
