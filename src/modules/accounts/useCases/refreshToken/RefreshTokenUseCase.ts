@@ -3,10 +3,16 @@ import { inject, injectable } from "tsyringe";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { AppError } from "@shared/errors/AppErrors";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import auth from '@config/auth';
 
 interface IPayload {
   sub: string;
   email: string;
+}
+
+interface ITokenResponse {
+  refresh_token: string;
+  token: string;
 }
 
 @injectable()
@@ -18,9 +24,9 @@ class RefreshTokenUseCase {
     @inject('DateProvider')
     private dateProvider: IDateProvider,
   ) { }
-  async execute(token: string): Promise<string> {
+  async execute(token: string): Promise<ITokenResponse> {
     try {
-      const { email, sub } = verify(token, authConfig.jwt.secret_refresh_token) as IPayload;
+      const { email, sub } = verify(token, auth.jwt.secret_refresh_token) as IPayload;
 
       const user_id = sub;
 
@@ -35,13 +41,13 @@ class RefreshTokenUseCase {
 
       await this.usersTokensRepository.deleteById(userToken.id);
 
-      const refresh_token = sign({ email }, authConfig.jwt.secret_refresh_token, {
+      const refresh_token = sign({ email }, auth.jwt.secret_refresh_token, {
         subject: sub,
-        expiresIn: authConfig.jwt.expires_in_refresh_token,
+        expiresIn: auth.jwt.expires_in_refresh_token,
       });
 
       const expires_date = this.dateProvider.addDays(
-        authConfig.jwt.expires_refresh_token_days
+        auth.jwt.expires_refresh_token_days
       );
 
       await this.usersTokensRepository.create({
@@ -50,7 +56,15 @@ class RefreshTokenUseCase {
         user_id
       });
 
-      return refresh_token;
+      const newToken = sign({}, auth.jwt.secret_token, {
+        subject: user_id,
+        expiresIn: auth.jwt.expiresIn,
+      });
+
+      return {
+        refresh_token,
+        token: newToken,
+      }
     } catch (error) {
       throw new AppError('Invalid token!', 401);
     }
