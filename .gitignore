@@ -4,3 +4,5 @@ node_modules
 tmp/*
 ormconfig.json
 coverage
+dist
+!tmp/.gitkeep
